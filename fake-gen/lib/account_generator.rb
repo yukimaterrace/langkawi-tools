@@ -5,9 +5,10 @@ require './lib/api'
 
 class AccountGenerator
 
-  def initialize
+  def initialize(password)
     @processor = Processor.new
     @api = API.new
+    @password = password
   end
 
   def build
@@ -30,7 +31,7 @@ class AccountGenerator
 
   def create_account
     email = Faker::Internet::email
-    password = '12345'
+    password = @password
     email_password = {email: email, password: password}
     @processor.state.update(email_password)
 

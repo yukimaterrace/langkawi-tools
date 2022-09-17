@@ -1,0 +1,13 @@
+faker_locale: ja
+
+job:
+  type: account
+  count: 300
+  password: '12345'
+
+# job:
+#   type: pair
+#   size_per_unit: 12
+#   admin:
+#     email: dustin@pagac.co
+#     password: '12345'

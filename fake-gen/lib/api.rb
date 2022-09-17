@@ -28,9 +28,17 @@ class API
   
   def create_account(params)
     request do
-      @conn.post('api/accounts') { |r|
+      @conn.post('api/accounts') do |r|
         r.body = params
-      }
+      end
+    end
+  end
+
+  def list_account(params)
+    request do
+      @conn.get('api/accounts') do |r|
+        r.params = params
+      end
     end
   end
 
@@ -61,6 +69,22 @@ class API
   def upload_picture_a(id, params)
     request do
       @multipart_conn.post("api/user_details/#{id}/picture_a") do |r|
+        r.body = params
+      end
+    end
+  end
+
+  def create_relation(params)
+    request do
+      @conn.post('api/relations') do |r|
+        r.body = params
+      end
+    end
+  end
+
+  def update_relation(id, params)
+    request do
+      @conn.put("api/relations/#{id}") do |r|
         r.body = params
       end
     end
