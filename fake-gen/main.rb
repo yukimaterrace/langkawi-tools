@@ -2,19 +2,33 @@ require 'faker'
 require './lib/config'
 require './lib/api'
 require './lib/account_generator'
+require './lib/pair_generator'
 
 def main()
-  unless ARGV.count == 1
-    p 'usage: ruby main.rb [number of users to create]'
+  Config.load
+  job = Config.job
+
+  case job['type']
+  when 'account' then
+    generate_account(job['count'], job['password'])
+  when 'pair' then
+    generate_pair(job['size_per_unit'], job['admin'])
+  else
+    p 'unrecognized job'
   end
-  user_count = ARGV[0].to_i
+end
 
-  config()
-
-  account_generator = AccountGenerator.new.build
-  (1..user_count).each do
+def generate_account(count, password)
+  account_generator = AccountGenerator.new(password).build
+  (1..count).each do
     account_generator.generate
   end
+end
+
+def generate_pair(size_per_unit, admin)
+  PairGenerator
+    .new(admin['email'], admin['password'], size_per_unit)
+    .generate
 end
 
 main()
