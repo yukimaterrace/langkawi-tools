@@ -4,10 +4,22 @@ job:
   type: account
   count: 300
   password: '12345'
+  avators:
+    root_dir: 'resource'
+    male:
+      - male_avator_1.png
+      - male_avator_2.png
+      - male_avator_3.png
+    female:
+      - female_avator_1.png
+      - female_avator_2.png
+      - female_avator_3.png
+      - female_avator_4.png
+      - female_avator_5.png
 
 # job:
 #   type: pair
 #   size_per_unit: 12
 #   admin:
-#     email: dustin@pagac.co
+#     email: shirly.robel@hamill.co
 #     password: '12345'
