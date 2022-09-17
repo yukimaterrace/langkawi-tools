@@ -5,10 +5,11 @@ require './lib/api'
 
 class AccountGenerator
 
-  def initialize(password)
+  def initialize(password, avators)
     @processor = Processor.new
     @api = API.new
     @password = password
+    @avators = avators
   end
 
   def build
@@ -67,9 +68,15 @@ class AccountGenerator
 
   def register_picture_a
     id = @processor.state[:user_detail_id]
-    filename = @processor.state[:gender] == :male ? 'men_avator.png' : 'women_avator.png'
+    filename = resolve_avator(@processor.state[:gender])
 
-    params = {picture_a: Faraday::UploadIO.new("resource/#{filename}", 'image/png')}
+    params = {picture_a: Faraday::UploadIO.new(filename, 'image/png')}
     @api.upload_picture_a(id, params)
+  end
+
+  def resolve_avator(gender)
+    avators = @avators[gender.to_s]
+    avator = avators[rand(0...avators.count)]
+    "#{@avators['root_dir']}/#{avator}"
   end
 end

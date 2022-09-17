@@ -10,7 +10,7 @@ def main()
 
   case job['type']
   when 'account' then
-    generate_account(job['count'], job['password'])
+    generate_account(job['count'], job['password'], job['avators'])
   when 'pair' then
     generate_pair(job['size_per_unit'], job['admin'])
   else
@@ -18,8 +18,8 @@ def main()
   end
 end
 
-def generate_account(count, password)
-  account_generator = AccountGenerator.new(password).build
+def generate_account(count, password, avators)
+  account_generator = AccountGenerator.new(password, avators).build
   (1..count).each do
     account_generator.generate
   end
