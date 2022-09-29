@@ -74,6 +74,14 @@ class API
     end
   end
 
+  def index_relation(params)
+    request do
+      @conn.get('api/relations') do |r|
+        r.params = params
+      end
+    end
+  end
+
   def create_relation(params)
     request do
       @conn.post('api/relations') do |r|
@@ -85,6 +93,14 @@ class API
   def update_relation(id, params)
     request do
       @conn.put("api/relations/#{id}") do |r|
+        r.body = params
+      end
+    end
+  end
+
+  def create_talk(params)
+    request do
+      @conn.post('api/talks') do |r|
         r.body = params
       end
     end
