@@ -23,3 +23,10 @@ job:
 #   admin:
 #     email: shirly.robel@hamill.co
 #     password: '12345'
+
+# job:
+#   type: talk
+#   talk_count: 30
+#   admin:
+#     email: shirly.robel@hamill.co
+#     password: '12345'
