@@ -3,6 +3,7 @@ require './lib/config'
 require './lib/api'
 require './lib/account_generator'
 require './lib/pair_generator'
+require './lib/talk_generator'
 
 def main()
   Config.load
@@ -13,6 +14,8 @@ def main()
     generate_account(job['count'], job['password'], job['avators'])
   when 'pair' then
     generate_pair(job['size_per_unit'], job['admin'])
+  when 'talk' then
+    generate_talk(job['admin'], job['talk_count'])
   else
     p 'unrecognized job'
   end
@@ -29,6 +32,10 @@ def generate_pair(size_per_unit, admin)
   PairGenerator
     .new(admin['email'], admin['password'], size_per_unit)
     .generate
+end
+
+def generate_talk(admin, talk_count)
+  TalkGenerator.new.generate(admin, talk_count)
 end
 
 main()
