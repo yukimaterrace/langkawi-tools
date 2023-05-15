@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 require './lib/api'
 require './lib/processor'
 
 class RelationGenerator
-
   def initialize(account, counter_account)
     @processor = Processor.new
     @api = API.new
-    
+
     @processor.state.update(email_password: extract_email_password(account))
     @processor.state.update(counter_email_password: extract_email_password(counter_account))
     @processor.state.update(user_id: extract_user_id(account))
@@ -52,7 +53,7 @@ class RelationGenerator
   def extract_email_password(account)
     { email: account['email'], password: account['password'] }
   end
-  
+
   def extract_user_id(account)
     account['user']['id']
   end
@@ -69,6 +70,6 @@ class RelationGenerator
 
   def update_relation(status, by_counter)
     id_key = by_counter ? :user_id : :counter_user_id
-    @api.update_relation(@processor.state[id_key], { status: status })
+    @api.update_relation(@processor.state[id_key], { status: })
   end
 end

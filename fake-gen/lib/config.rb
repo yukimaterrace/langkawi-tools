@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'faker'
 require 'yaml'
 
 class Config
-
   def self.load
     @@config = YAML.load_file('./resource/config.yaml')
     Faker::Config.locale = @@config['faker_locale']
