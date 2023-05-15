@@ -1,14 +1,15 @@
+# frozen_string_literal: true
+
 require 'faraday'
 require 'faraday/multipart'
 
 class APIError < StandardError
   def initialize(status, exception)
+    super
     @message = "#{status} #{exception}"
   end
 
-  def message
-    @message
-  end
+  attr_reader :message
 end
 
 class API
@@ -16,7 +17,7 @@ class API
 
   def initialize
     @base_url = 'http://localhost:3000'
-    
+
     @conn = conn do |f|
       f.request :json
     end
@@ -25,7 +26,7 @@ class API
       f.request :multipart
     end
   end
-  
+
   def create_account(params)
     request do
       @conn.post('api/accounts') do |r|
@@ -51,7 +52,7 @@ class API
   end
 
   def update_user(id, params)
-    request do 
+    request do
       @conn.put("api/users/#{id}") do |r|
         r.body = params
       end
@@ -105,9 +106,9 @@ class API
       end
     end
   end
-  
-  private 
-  
+
+  private
+
   def conn(&config)
     Faraday.new(@base_url) do |f|
       f.request :authorization, 'Bearer', -> { @token }
@@ -118,9 +119,8 @@ class API
 
   def request(&block)
     resp = block.call
-    unless resp.status == 200
-      raise APIError.new(resp.status, resp.body['exception'])
-    end
+    raise APIError.new(resp.status, resp.body['exception']) unless resp.status == 200
+
     resp.body
   end
 end

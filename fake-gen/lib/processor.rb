@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Processor
   attr_accessor :state
 
@@ -12,7 +14,7 @@ class Processor
   end
 
   def execute
-    @procs.each { |p| p.call }
+    @procs.each(&:call)
     self
   end
 

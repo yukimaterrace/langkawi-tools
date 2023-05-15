@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 require 'faker'
 require 'faraday'
 require './lib/processor'
 require './lib/api'
 
 class AccountGenerator
-
   def initialize(password, avators)
     @processor = Processor.new
     @api = API.new
@@ -31,13 +32,13 @@ class AccountGenerator
   private
 
   def create_account
-    email = Faker::Internet::email
+    email = Faker::Internet.email
     password = @password
-    email_password = {email: email, password: password}
+    email_password = { email:, password: }
     @processor.state.update(email_password)
 
-    resp = @api.create_account(email_password.merge(:account_type => :owned))
-    @processor.state.update(:user_id => resp['user']['id'])
+    resp = @api.create_account(email_password.merge(account_type: :owned))
+    @processor.state.update(user_id: resp['user']['id'])
   end
 
   def do_login
@@ -51,26 +52,26 @@ class AccountGenerator
     last_name = Faker::Name.last_name
     age = Faker::Number.within(range: 20..50)
 
-    params = {first_name: first_name, last_name: last_name, gender: gender, age: age}
+    params = { first_name:, last_name:, gender:, age: }
     @api.update_user(@processor.state[:user_id], params)
 
-    @processor.state.update(:gender => gender)
+    @processor.state.update(gender:)
   end
 
   def create_user_detail
     user_id = @processor.state[:user_id]
     description = Faker::Lorem.paragraph(sentence_count: 4, supplemental: true, random_sentences_to_add: 4)
-    params = {user_id: user_id, description_a: description}
+    params = { user_id:, description_a: description }
 
     resp = @api.create_user_detail(params)
-    @processor.state.update(:user_detail_id => resp['id'])
+    @processor.state.update(user_detail_id: resp['id'])
   end
 
   def register_picture_a
     id = @processor.state[:user_detail_id]
     filename = resolve_avator(@processor.state[:gender])
 
-    params = {picture_a: Faraday::UploadIO.new(filename, 'image/png')}
+    params = { picture_a: Faraday::UploadIO.new(filename, 'image/png') }
     @api.upload_picture_a(id, params)
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faker'
 require './lib/config'
 require './lib/api'
@@ -5,16 +7,18 @@ require './lib/account_generator'
 require './lib/pair_generator'
 require './lib/talk_generator'
 
-def main()
+def main
   Config.load
-  job = Config.job
+  generate Config.job
+end
 
+def generate(job)
   case job['type']
-  when 'account' then
+  when 'account'
     generate_account(job['count'], job['password'], job['avators'])
-  when 'pair' then
+  when 'pair'
     generate_pair(job['size_per_unit'], job['admin'])
-  when 'talk' then
+  when 'talk'
     generate_talk(job['admin'], job['talk_count'])
   else
     p 'unrecognized job'
@@ -38,4 +42,4 @@ def generate_talk(admin, talk_count)
   TalkGenerator.new.generate(admin, talk_count)
 end
 
-main()
+main
