@@ -9,8 +9,10 @@ require './lib/talk_generator'
 
 def main
   Config.load
-  job = Config.job
+  generate Config.job
+end
 
+def generate(job)
   case job['type']
   when 'account'
     generate_account(job['count'], job['password'], job['avators'])

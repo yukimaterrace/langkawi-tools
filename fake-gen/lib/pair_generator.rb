@@ -27,18 +27,36 @@ class PairGenerator
 
   def relation_builders
     [
+      relation_builders_for_first,
+      relation_builders_for_second,
+      relation_builders_for_third
+    ].flatten
+  end
+
+  def relation_builders_for_first
+    [
       ->(o, c) { RelationGenerator.new(o, c).build_for_pending },
       ->(o, c) { RelationGenerator.new(c, o).build_for_pending },
       ->(o, c) { RelationGenerator.new(o, c).build_for_withdraw },
-      ->(o, c) { RelationGenerator.new(c, o).build_for_withdraw },
+      ->(o, c) { RelationGenerator.new(c, o).build_for_withdraw }
+    ]
+  end
+
+  def relation_builders_for_second
+    [
+      ->(o, c) { RelationGenerator.new(o, c).build_for_refused },
+      ->(o, c) { RelationGenerator.new(c, o).build_for_refused },
       ->(o, c) { RelationGenerator.new(o, c).build_for_accepted },
-      ->(o, c) { RelationGenerator.new(c, o).build_for_accepted },
+      ->(o, c) { RelationGenerator.new(c, o).build_for_accepted }
+    ]
+  end
+
+  def relation_builders_for_third
+    [
       ->(o, c) { RelationGenerator.new(o, c).build_for_declined },
       ->(o, c) { RelationGenerator.new(c, o).build_for_declined },
       ->(o, c) { RelationGenerator.new(o, c).build_for_disconnected },
-      ->(o, c) { RelationGenerator.new(c, o).build_for_disconnected },
-      ->(o, c) { RelationGenerator.new(o, c).build_for_refused },
-      ->(o, c) { RelationGenerator.new(c, o).build_for_refused }
+      ->(o, c) { RelationGenerator.new(c, o).build_for_disconnected }
     ]
   end
 
