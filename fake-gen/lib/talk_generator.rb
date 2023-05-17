@@ -9,14 +9,14 @@ class TalkGenerator
     @api = API.new
   end
 
-  def generate(admin)
+  def generate(admin, talk_count)
     accounts = list_account(admin)
     user_id_account_hash = create_user_id_account_hash(accounts)
     admin_account = accounts.find do |account|
       account.slice('email', 'password') == admin
     end
 
-    create_talks(admin, admin_account, user_id_account_hash)
+    create_talks(admin, admin_account, user_id_account_hash, talk_count)
   end
 
   private
@@ -33,7 +33,7 @@ class TalkGenerator
     end
   end
 
-  def create_talks(admin, admin_account, user_id_account_hash)
+  def create_talks(admin, admin_account, user_id_account_hash, talk_count)
     list_accepted_relation(admin).each_with_index do |relation, i|
       next unless i.even?
 
