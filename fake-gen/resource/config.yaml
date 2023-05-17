@@ -2,7 +2,7 @@ faker_locale: ja
 
 job:
   type: account
-  count: 300
+  count: 100
   password: '12345'
   avators:
     root_dir: 'resource'
@@ -19,14 +19,14 @@ job:
 
 # job:
 #   type: pair
-#   size_per_unit: 12
+#   size_per_unit: 8
 #   admin:
-#     email: shirly.robel@hamill.co
+#     email: jeanie.predovic@mertz-dietrich.example
 #     password: '12345'
 
 # job:
 #   type: talk
 #   talk_count: 30
 #   admin:
-#     email: shirly.robel@hamill.co
+#     email: jeanie.predovic@mertz-dietrich.example
 #     password: '12345'
