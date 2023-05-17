@@ -5,7 +5,7 @@ require 'faraday/multipart'
 
 class APIError < StandardError
   def initialize(status, exception)
-    super
+    super()
     @message = "#{status} #{exception}"
   end
 
